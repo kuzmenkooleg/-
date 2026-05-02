@@ -1,0 +1,246 @@
+<Window x:Class="Lab08.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Lab08"
+        Height="760"
+        Width="1180"
+        MinHeight="620"
+        MinWidth="900"
+        Loaded="Window_Loaded"
+        PreviewKeyDown="Window_PreviewKeyDown"
+        Closing="Window_Closing"
+        Background="#F3F0EA"
+        FontFamily="Segoe UI">
+    <Window.Resources>
+        <SolidColorBrush x:Key="InkBrush" Color="#222625"/>
+        <SolidColorBrush x:Key="MutedBrush" Color="#68706C"/>
+        <SolidColorBrush x:Key="PanelBrush" Color="#FFFCF7"/>
+        <SolidColorBrush x:Key="AccentBrush" Color="#007C78"/>
+        <SolidColorBrush x:Key="AccentDarkBrush" Color="#005F5C"/>
+        <SolidColorBrush x:Key="WarmBrush" Color="#B95946"/>
+        <Style TargetType="Button">
+            <Setter Property="MinHeight" Value="34"/>
+            <Setter Property="MinWidth" Value="74"/>
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="Padding" Value="12,5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="#EDF3EF"/>
+            <Setter Property="Foreground" Value="{StaticResource InkBrush}"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style TargetType="ToggleButton">
+            <Setter Property="MinHeight" Value="34"/>
+            <Setter Property="MinWidth" Value="42"/>
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="Padding" Value="12,5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="#EDF3EF"/>
+            <Setter Property="Foreground" Value="{StaticResource InkBrush}"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="MinHeight" Value="34"/>
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="Padding" Value="4"/>
+            <Setter Property="Background" Value="White"/>
+        </Style>
+        <Style x:Key="CommandCard" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource PanelBrush}"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Margin" Value="0,0,10,0"/>
+            <Setter Property="Padding" Value="12,9"/>
+            <Setter Property="BorderBrush" Value="#E1DDD4"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+        <Style x:Key="GroupTitle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource MutedBrush}"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="3,0,0,5"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="78"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="132"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="32"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" Background="#202725">
+            <Grid Margin="24,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="Scriptum Desk" Foreground="White" FontSize="24" FontWeight="SemiBold"/>
+                    <TextBlock Text="WPF редактор документів, стилів і зображень" Foreground="#C8D7D1" FontSize="13" Margin="1,3,0,0"/>
+                </StackPanel>
+                <Border Grid.Column="1" Background="#2D3734" CornerRadius="18" Padding="14,7" VerticalAlignment="Center">
+                    <TextBlock Text="Lab08" Foreground="#F5F1E8" FontWeight="SemiBold"/>
+                </Border>
+            </Grid>
+        </Border>
+        <Menu Grid.Row="1" Background="#FFFCF7" BorderBrush="#DED8CC" BorderThickness="0,0,0,1">
+            <MenuItem x:Name="FileMenu">
+                <MenuItem x:Name="NewMenuItem" Command="ApplicationCommands.New" InputGestureText="Ctrl+N"/>
+                <MenuItem x:Name="NewWindowMenuItem" Click="NewWindow_Click"/>
+                <MenuItem x:Name="OpenMenuItem" Command="ApplicationCommands.Open" InputGestureText="Ctrl+O"/>
+                <Separator/>
+                <MenuItem x:Name="SaveMenuItem" Command="ApplicationCommands.Save" InputGestureText="Ctrl+S"/>
+                <MenuItem x:Name="SaveAsMenuItem" Click="SaveAs_Click" InputGestureText="Ctrl+Shift+S"/>
+                <MenuItem x:Name="SaveAllMenuItem" Click="SaveAll_Click"/>
+                <Separator/>
+                <MenuItem x:Name="PrintMenuItem" Command="ApplicationCommands.Print" InputGestureText="Ctrl+P"/>
+                <Separator/>
+                <MenuItem x:Name="CloseDocumentMenuItem" Command="ApplicationCommands.Close" InputGestureText="Ctrl+W"/>
+                <MenuItem x:Name="ExitMenuItem" Click="Exit_Click"/>
+            </MenuItem>
+            <MenuItem x:Name="EditMenu">
+                <MenuItem x:Name="UndoMenuItem" Command="ApplicationCommands.Undo"/>
+                <MenuItem x:Name="RedoMenuItem" Command="ApplicationCommands.Redo"/>
+                <Separator/>
+                <MenuItem x:Name="CutMenuItem" Command="ApplicationCommands.Cut"/>
+                <MenuItem x:Name="CopyMenuItem" Command="ApplicationCommands.Copy"/>
+                <MenuItem x:Name="PasteMenuItem" Command="ApplicationCommands.Paste"/>
+                <MenuItem x:Name="SelectAllMenuItem" Command="ApplicationCommands.SelectAll"/>
+                <Separator/>
+                <MenuItem x:Name="FindMenuItem" Click="Find_Click" InputGestureText="Ctrl+F"/>
+                <MenuItem x:Name="ReplaceMenuItem" Click="Find_Click" InputGestureText="Ctrl+H"/>
+            </MenuItem>
+            <MenuItem x:Name="FormatMenu">
+                <MenuItem x:Name="BoldMenuItem" Command="EditingCommands.ToggleBold" InputGestureText="Ctrl+B"/>
+                <MenuItem x:Name="ItalicMenuItem" Command="EditingCommands.ToggleItalic" InputGestureText="Ctrl+I"/>
+                <MenuItem x:Name="UnderlineMenuItem" Command="EditingCommands.ToggleUnderline" InputGestureText="Ctrl+U"/>
+                <Separator/>
+                <MenuItem x:Name="ColorMenuItem" Click="Color_Click"/>
+                <MenuItem x:Name="AlignMenu">
+                    <MenuItem x:Name="LeftMenuItem" Click="Left_Click"/>
+                    <MenuItem x:Name="CenterMenuItem" Click="Center_Click"/>
+                    <MenuItem x:Name="RightMenuItem" Click="Right_Click"/>
+                    <MenuItem x:Name="JustifyMenuItem" Click="Justify_Click"/>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem x:Name="InsertMenu">
+                <MenuItem x:Name="ImageMenuItem" Click="Image_Click" InputGestureText="Ctrl+Shift+I"/>
+                <MenuItem x:Name="DateMenuItem" Click="Date_Click"/>
+            </MenuItem>
+            <MenuItem x:Name="LanguageMenu">
+                <MenuItem x:Name="UkrainianMenuItem" Click="Ukrainian_Click"/>
+                <MenuItem x:Name="EnglishMenuItem" Click="English_Click"/>
+                <MenuItem x:Name="PolishMenuItem" Click="Polish_Click"/>
+            </MenuItem>
+            <MenuItem x:Name="WindowMenu">
+                <MenuItem x:Name="PreviousDocumentMenuItem" Click="PreviousDocument_Click"/>
+                <MenuItem x:Name="NextDocumentMenuItem" Click="NextDocument_Click"/>
+            </MenuItem>
+        </Menu>
+        <Border Grid.Row="2" Background="#ECE8DF" BorderBrush="#DED8CC" BorderThickness="0,0,0,1">
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Padding="16,12">
+                <StackPanel Orientation="Horizontal">
+                    <Border Style="{StaticResource CommandCard}">
+                        <StackPanel>
+                            <TextBlock Text="Документ" Style="{StaticResource GroupTitle}"/>
+                            <WrapPanel>
+                                <Button x:Name="NewButton" Command="ApplicationCommands.New"/>
+                                <Button x:Name="OpenButton" Command="ApplicationCommands.Open"/>
+                                <Button x:Name="SaveButton" Command="ApplicationCommands.Save"/>
+                                <Button x:Name="SaveAsButton" Click="SaveAs_Click"/>
+                            </WrapPanel>
+                        </StackPanel>
+                    </Border>
+                    <Border Style="{StaticResource CommandCard}">
+                        <StackPanel>
+                            <TextBlock Text="Редагування" Style="{StaticResource GroupTitle}"/>
+                            <WrapPanel>
+                                <Button x:Name="UndoButton" Command="ApplicationCommands.Undo"/>
+                                <Button x:Name="RedoButton" Command="ApplicationCommands.Redo"/>
+                                <Button x:Name="FindButton" Click="Find_Click"/>
+                            </WrapPanel>
+                        </StackPanel>
+                    </Border>
+                    <Border Style="{StaticResource CommandCard}">
+                        <StackPanel>
+                            <TextBlock Text="Стиль" Style="{StaticResource GroupTitle}"/>
+                            <WrapPanel>
+                                <ToggleButton x:Name="BoldButton" Command="EditingCommands.ToggleBold" Content="B" FontWeight="Bold"/>
+                                <ToggleButton x:Name="ItalicButton" Command="EditingCommands.ToggleItalic" Content="I" FontStyle="Italic"/>
+                                <ToggleButton x:Name="UnderlineButton" Command="EditingCommands.ToggleUnderline" Content="U"/>
+                                <Button x:Name="ColorButton" Click="Color_Click"/>
+                            </WrapPanel>
+                        </StackPanel>
+                    </Border>
+                    <Border Style="{StaticResource CommandCard}" MinWidth="330">
+                        <StackPanel>
+                            <TextBlock Text="Шрифт" Style="{StaticResource GroupTitle}"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock x:Name="FontLabel" VerticalAlignment="Center" Margin="3,0,4,0"/>
+                                <ComboBox x:Name="FontFamilyBox" Width="165" SelectionChanged="FontFamilyBox_SelectionChanged"/>
+                                <TextBlock x:Name="SizeLabel" VerticalAlignment="Center" Margin="8,0,4,0"/>
+                                <ComboBox x:Name="FontSizeBox" Width="72" IsEditable="True" SelectionChanged="FontSizeBox_SelectionChanged" LostKeyboardFocus="FontSizeBox_LostKeyboardFocus" PreviewKeyDown="FontSizeBox_PreviewKeyDown"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                    <Border Style="{StaticResource CommandCard}">
+                        <StackPanel>
+                            <TextBlock Text="Абзац" Style="{StaticResource GroupTitle}"/>
+                            <WrapPanel>
+                                <Button x:Name="LeftButton" Click="Left_Click"/>
+                                <Button x:Name="CenterButton" Click="Center_Click"/>
+                                <Button x:Name="RightButton" Click="Right_Click"/>
+                                <Button x:Name="JustifyButton" Click="Justify_Click"/>
+                            </WrapPanel>
+                        </StackPanel>
+                    </Border>
+                    <Border Style="{StaticResource CommandCard}">
+                        <StackPanel>
+                            <TextBlock Text="Додати" Style="{StaticResource GroupTitle}"/>
+                            <WrapPanel>
+                                <Button x:Name="ImageButton" Click="Image_Click"/>
+                            </WrapPanel>
+                        </StackPanel>
+                    </Border>
+                    <Border Style="{StaticResource CommandCard}">
+                        <StackPanel>
+                            <TextBlock Text="Інтерфейс" Style="{StaticResource GroupTitle}"/>
+                            <ComboBox x:Name="LanguageBox" Width="145" SelectionChanged="LanguageBox_SelectionChanged"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+        <Grid Grid.Row="3" Margin="16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="214"/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Border Background="#272F2C" CornerRadius="10" Padding="16">
+                <StackPanel>
+                    <TextBlock Text="Робочий стіл" Foreground="White" FontSize="18" FontWeight="SemiBold"/>
+                    <TextBlock Text="Вкладки документів відкриваються праворуч. Зображення краще зберігати у форматі .xamlpkg." Foreground="#C8D7D1" TextWrapping="Wrap" Margin="0,8,0,18"/>
+                    <Button Command="ApplicationCommands.New" Content="Новий документ" Background="#007C78" Foreground="White"/>
+                    <Button Command="ApplicationCommands.Open" Content="Відкрити файл" Background="#B95946" Foreground="White"/>
+                    <Button Click="SaveAll_Click" Content="Зберегти все"/>
+                </StackPanel>
+            </Border>
+            <Border Grid.Column="2" Background="#FFFCF7" CornerRadius="10" Padding="10" BorderBrush="#E1DDD4" BorderThickness="1">
+                <TabControl x:Name="DocumentsTab" SelectionChanged="DocumentsTab_SelectionChanged" Background="Transparent"/>
+            </Border>
+        </Grid>
+        <StatusBar Grid.Row="4" Background="#202725" Foreground="White">
+            <StatusBarItem>
+                <TextBlock x:Name="StatusText"/>
+            </StatusBarItem>
+            <Separator/>
+            <StatusBarItem>
+                <TextBlock x:Name="PositionText"/>
+            </StatusBarItem>
+            <Separator/>
+            <StatusBarItem>
+                <TextBlock x:Name="InfoText"/>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>
